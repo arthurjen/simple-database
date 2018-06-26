@@ -1,0 +1,30 @@
+{
+  "name": "simple-database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test:mocha": "mocha --reporter mocha-better-spec-reporter",
+    "test": "npm run test:mocha",
+    "start": "npm run test:mocha -- -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arthurjen/simple-database.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arthurjen/simple-database/issues"
+  },
+  "homepage": "https://github.com/arthurjen/simple-database#readme",
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "mocha": "^5.2.0"
+  },
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2"
+  }
+}
