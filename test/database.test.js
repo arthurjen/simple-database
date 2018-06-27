@@ -54,5 +54,10 @@ describe('store', () => {
             });
     });
 
-    
+    it('returns [] when getAll is called on an empty directory', () => {
+        return store.getAll()
+            .then(got => {
+                assert.deepEqual(got, []);
+            });
+    });
 });
