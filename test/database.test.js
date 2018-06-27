@@ -46,4 +46,13 @@ describe('store', () => {
                 assert.equal(got, null);
             });
     });
+
+    it('fails to delete a nonexistent file', () => {
+        return store.delete('willpower')
+            .then(response => {
+                assert.equal(response.removed, false);
+            });
+    });
+
+    
 });
