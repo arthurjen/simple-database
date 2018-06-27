@@ -88,4 +88,17 @@ describe('store', () => {
                 assert.deepEqual(gotAll.sort(sortID), thoughts.sort(sortID));
             });
     });
+
+    it('updates an item by id', () => {
+        return store.save({ thought: 'Should I do the readings?' })
+            .then(saved => {
+                return store.update(saved._id, { thought: 'nah' });
+            })
+            .then(updated => {
+                return store.get(updated._id);
+            })
+            .then(got => {
+                assert.equal(got.thought, 'nah');
+            });
+    });
 });
