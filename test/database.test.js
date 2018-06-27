@@ -20,16 +20,8 @@ describe('store', () => {
 
     it.only('saves a file to brain with _id property', () => {
         return store.save({ thought: 'I\'m so hungry!' })
-            .then(() => {
-                return readdir(dest);
-            })
-            .then(contents => {
-                const savedFileName = path.join(dest, contents[0]);
-                return readFile(savedFileName, 'utf8');
-            })
             .then(saved => {
-                const test = JSON.parse(saved);
-                assert.ok(test._id);
+                assert.ok(JSON.parse(saved)._id);
             });
     });
 
