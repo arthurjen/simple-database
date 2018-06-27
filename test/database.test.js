@@ -18,11 +18,17 @@ describe('store', () => {
         return mkdirp(dest);
     });
 
-    it.only('saves a file to brain with _id property', () => {
+    it('saves a file to brain with _id property', () => {
         return store.save({ thought: 'I\'m so hungry!' })
             .then(saved => {
                 assert.ok(JSON.parse(saved)._id);
             });
     });
 
+    it('gets a file based on _id', () => {
+        return store.get('badId')
+            .then(got => {
+                assert.equal(got, null);
+            });
+    });
 });
