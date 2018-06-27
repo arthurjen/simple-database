@@ -3,6 +3,15 @@ const path = require('path');
 const Store = require('../lib/Store');
 const { rimraf, mkdirp } = require('../lib/fs');
 
+function sortID(a, b) {
+    const a_id = a._id.toUpperCase();
+    const b_id = b._id.toUpperCase();
+    if(a_id < b_id) return -1;
+    if(a_id > b_id) return 1;
+    return 0;
+    
+}
+
 describe('store', () => {
 
     const dest = path.join(__dirname, 'brain');
@@ -48,7 +57,7 @@ describe('store', () => {
     });
 
     it('fails to delete a nonexistent file', () => {
-        return store.delete('willpower')
+        return store.delete('all my problems')
             .then(response => {
                 assert.equal(response.removed, false);
             });
@@ -62,9 +71,11 @@ describe('store', () => {
     });
 
     it('returns an array of objects when using getAll', () => {
+    
         const thoughts = [
             { thought: 'Thin mints are delicious.' },
             { thought: 'What time is it?' },
+            { thought: 'Sort this, bitch.' },
             { thought: 'What\'s for lunch?' }
         ];
         return Promise.all(thoughts.map(thought => {
@@ -74,12 +85,7 @@ describe('store', () => {
                 return store.getAll();
             })
             .then(gotAll => {
-                return Promise.all(gotAll.map(fileName => {
-                    return store.get(fileName.substring(0, 10));
-                }));
-            })
-            .then(got => {
-                assert.deepEqual(got, thoughts);
+                assert.deepEqual(gotAll.sort(sortID), thoughts.sort(sortID));
             });
     });
 });
