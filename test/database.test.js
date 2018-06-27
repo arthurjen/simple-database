@@ -27,7 +27,7 @@ describe('store', () => {
     });
 
     it('returns null if file does not exist', () => {
-        return store.get('badId')
+        return store.get('a job')
             .then(got => {
                 assert.equal(got, null);
             });
@@ -58,6 +58,28 @@ describe('store', () => {
         return store.getAll()
             .then(got => {
                 assert.deepEqual(got, []);
+            });
+    });
+
+    it('returns an array of objects when using getAll', () => {
+        const thoughts = [
+            { thought: 'Thin mints are delicious.' },
+            { thought: 'What time is it?' },
+            { thought: 'What\'s for lunch?' }
+        ];
+        return Promise.all(thoughts.map(thought => {
+            return store.save(thought);
+        }))
+            .then(() => {
+                return store.getAll();
+            })
+            .then(gotAll => {
+                return Promise.all(gotAll.map(fileName => {
+                    return store.get(fileName.substring(0, 10));
+                }));
+            })
+            .then(got => {
+                assert.deepEqual(got, thoughts);
             });
     });
 });
